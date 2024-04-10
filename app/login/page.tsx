@@ -1,12 +1,14 @@
 "use client"
 import { useState } from "react"
 import toast from "react-hot-toast"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { signIn } from "next-auth/react"
 import Link from "next/link"
 
 const Login = () => {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const callbackUrl = searchParams.get('callbackUrl') || "/"
 
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
@@ -28,7 +30,7 @@ const Login = () => {
       toast.error(result.error)
     } else {
       toast.success("เข้าสู่ระบบสำเร็จแล้ว")
-      router.push("/")
+      router.push(callbackUrl)
     }
 
   }
@@ -48,6 +50,8 @@ const Login = () => {
                     <button className="w-full bg-[#F4EEE0] h-12 rounded-md text-[#6D5D6E] text-xl font-bold hover:bg-[#f4eee0ea]" disabled={loading}>{loading ? "กรุณารอสักครู่" : "ยืนยัน"}</button>
 
                 </form>
+
+                <button onClick={() => signIn('google', { callbackUrl })} className="bg-red-700 w-full h-10 rounded-xl mt-4 hover:bg-red-800">Sign in with Google</button>
 
                 <Link href="/forgot-password" className="flex mt-4 hover:text-gray-300 text-lg justify-center">ลืมรหัสผ่านใช่หรือไม่?</Link>
             </div>
