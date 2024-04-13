@@ -32,7 +32,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-, "utils/dbConnect.js", "models/user.js"  ],
+, "utils/dbConnect.js", "models/user.js", "app/api/crud/uploads/route.js", "middleware.js"  ],
   "exclude": [
     "node_modules"
   ]

@@ -1,13 +1,13 @@
 "use client"
 
 import type { Metadata } from "next";
-import "./globals.css";
+
 
 import Header from "../components/nav/Header";
 import { Toaster } from 'react-hot-toast'
 
 import { SessionProvider } from "next-auth/react";
-
+import "./globals.css";
 
 
 export default function RootLayout({

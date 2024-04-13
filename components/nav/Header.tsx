@@ -23,7 +23,7 @@ const Header = () => {
           <div className="flex gap-6 flex-none">
           <Link href={`/dashboard/user`}>{data?.user?.name}</Link>
 
-          {data?.user?.role?.filter((r : any) => (r !== 'subscriber')).map((r : any, i : number) => 
+          {data?.user?.role.filter((r : any) => (r !== 'subscriber')).map((r : any, i : number) => 
           <Link key={i} href={`/dashboard/${r}`}>{r?.charAt(0).toUpperCase()}{r?.slice(1)}</Link>
           )}
 
