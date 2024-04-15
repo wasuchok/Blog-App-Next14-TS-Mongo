@@ -9,6 +9,9 @@ const AuthorHeader = () => {
             <Link href="/dashboard/author">ผู้เขียน</Link>
 
             <Link href="/blog/create">เขียนบล็อก</Link>
+
+            <Link href="/dashboard/author/blogs">บล็อกของฉัน</Link>
+            
             </div>
 
             

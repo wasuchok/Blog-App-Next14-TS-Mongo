@@ -1,10 +1,15 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useSession } from "next-auth/react";
+import { BlogContext } from "@/app/context/blogContext";
+
+
 const TagForm = () => {
-  const {data} = useSession()
+  let { selectedTags, setSelectedTags } = useContext(BlogContext)
+
+  const { data } = useSession()
 
 
   const [name, setName] = useState("");
@@ -12,7 +17,6 @@ const TagForm = () => {
   const [tags, setTags] = useState([]);
 
   const [search, setSearch] = useState<string>("");
-  const [selectedTags, setSelectedTags] = useState<any>([])
 
   const handleSearch = (e: any) => {
     e.preventDefault();
@@ -78,8 +82,9 @@ const TagForm = () => {
         setName("")
         toast.success(`${response.data} tag is deleted`)
       }
-    } catch (err) {
-      console.log(err)
+    } catch (err : any) {
+      console.log(err.response.data.error)
+      toast.error(err.response.data.error)
     }
   }
 
@@ -128,16 +133,23 @@ const TagForm = () => {
           
           {tags.filter((t : any) => t?.name.toLowerCase()?.includes(search.toLowerCase())).map((tag: any, index) => (
             <>
+            <div className="flex flex-col justify-center">
+
+            {tag?.postedBy === data?.user?._id && (
+              <button className="bg-red-500 w-6 rounded-xd" onClick={() => handleTagDelete(tag._id)}>X</button>
+            )}
+
             <button key={index}
-              className="border-2 rounded-lg hover:bg-slate-500 w-auto h-8 flex justify-between p-2 items-center"
+              className="border-2 rounded-lg hover:bg-slate-500"
+
               onClick={() => handleSelectedTag(tag)}
             >
               {tag.name}
             </button>
 
-            {tag?.postedBy === data?.user?._id && (
-              <button className="bg-red-500 w-6" onClick={() => handleTagDelete(tag._id)}>X</button>
-              )}
+            </div>
+
+
             </>
           ))}
         </div>

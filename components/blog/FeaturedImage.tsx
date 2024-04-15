@@ -1,12 +1,14 @@
 "use client"
 import axios from "axios"
-import { useState } from "react"
+import { useState, useContext } from "react"
 import toast from "react-hot-toast"
 
 import Resizer from 'react-image-file-resizer'
 
+import { BlogContext } from "@/app/context/blogContext"
+
 const FeaturedImage = () => {
-  const [featuredImage, setFeaturedImage] = useState("")
+  const { featuredImage, setFeaturedImage } = useContext(BlogContext)
   const [imagePreview, setImagePreview] = useState("")
   const [uploadingImage, setUploadingImage] = useState<boolean>(false)
 
@@ -26,7 +28,8 @@ const FeaturedImage = () => {
                         toast.error("Image upload failed")
                     } else {
                         
-                        resolve(response.data.url)
+                      resolve(response.data.url)
+                      setFeaturedImage(response.data.url)
                     }
                 } catch (err) {
                     reject(err)
@@ -50,7 +53,6 @@ const FeaturedImage = () => {
 
     try {
       const imageUrl : any = await imageUpload(selectedImage)
-      setFeaturedImage(imageUrl)
       setUploadingImage(false)
     } catch (err : any) {
       console.log(err)

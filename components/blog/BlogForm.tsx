@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import MarkDownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
 
@@ -14,9 +14,15 @@ import toast from 'react-hot-toast'
 
 import axios from 'axios'
 
+import { BlogContext } from "@/app/context/blogContext";
+
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+
+dayjs.extend(relativeTime)
+
 const MarkdownEditor = () => {
-  const [title, setTitle] = useState<string>("");
-  const [markdown, setMarkdown] = useState<string>("");
+  let { title, setTitle, markdown, setMarkdown } = useContext(BlogContext)
 
   const md = new MarkDownIt({
     highlight : (str, lang) => {
@@ -24,7 +30,7 @@ const MarkdownEditor = () => {
 
         try {
             const highlightedCode = hljs.highlight(language, str, true).value
-            return `<pre class="hljs"><code>${highlightedCode}</code></pre>`
+            return `<pre class="hljs"><code class="text-black">${highlightedCode}</code></pre>`
         } catch (error) {
             return ""
         }
